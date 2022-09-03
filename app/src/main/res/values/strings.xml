@@ -6,6 +6,7 @@
 
     <string name="note_title_hint">Title</string>
     <string name="note_description_hint">Description</string>
+    <string name="priority_label">Priority</string>
 
     <string name="prompt_note_saved">Note saved</string>
     <string name="prompt_note_not_saved">Note not saved</string>

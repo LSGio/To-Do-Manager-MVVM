@@ -1,21 +1,24 @@
 package com.lsgio.todoapp;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.slider.Slider;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class AddNewNoteActivity extends AppCompatActivity {
 
     private TextInputEditText mTitleInputEditText;
     private TextInputEditText mDescriptionInputEditText;
+    private Slider mPrioritySlider;
     private ActionBar mActionBar;
 
     @Override
@@ -26,11 +29,13 @@ public class AddNewNoteActivity extends AppCompatActivity {
         mActionBar = getSupportActionBar();
         mTitleInputEditText = findViewById(R.id.edittext_note_title);
         mDescriptionInputEditText = findViewById(R.id.edittext_note_description);
+        mPrioritySlider = findViewById(R.id.slider_priority);
 
         if(mActionBar != null) {
             mActionBar.setHomeAsUpIndicator(R.drawable.ic_close);
             mActionBar.setDisplayHomeAsUpEnabled(true);
         }
+
     }
 
     @Override
@@ -55,7 +60,12 @@ public class AddNewNoteActivity extends AppCompatActivity {
     private void requestSaveNote() {
         String title = mTitleInputEditText.getText().toString();
         String description = mDescriptionInputEditText.getText().toString();
-        int priority = 1;
+        int priority = (int) mPrioritySlider.getValue();
+
+        if(title.trim().isEmpty() || description.trim().isEmpty()) {
+            Toast.makeText(this, "Cannot have empty title or description", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         Intent saveNoteIntent = new Intent();
         saveNoteIntent.putExtra(Constants.EXTRA_NOTE_TITLE, title);

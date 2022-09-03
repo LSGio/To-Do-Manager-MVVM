@@ -4,7 +4,6 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -34,9 +33,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         mRecyclerView = findViewById(R.id.recyclerview_notes);
+        mAddNoteFloatingActionButton = findViewById(R.id.floatingactionbutton_add_note);
+
         mNoteViewModel = new ViewModelProvider(this).get(NoteViewModel.class);
         mNoteAdapter = new NoteAdapter();
-        mAddNoteFloatingActionButton = findViewById(R.id.floatingactionbutton_add_note);
 
         mRecyclerView.setAdapter(mNoteAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
