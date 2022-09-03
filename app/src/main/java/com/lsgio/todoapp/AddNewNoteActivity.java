@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -43,13 +42,14 @@ public class AddNewNoteActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_item_save:
-                requestSaveNote();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        final int id = item.getItemId();
+        if (id == R.id.menu_item_save) {
+            requestSaveNote();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
+
     }
 
     private void requestSaveNote() {
@@ -58,9 +58,9 @@ public class AddNewNoteActivity extends AppCompatActivity {
         int priority = 1;
 
         Intent saveNoteIntent = new Intent();
-        saveNoteIntent.putExtra("EXTRA_NOTE_TITLE", title);
-        saveNoteIntent.putExtra("EXTRA_NOTE_DESCRIPTION", description);
-        saveNoteIntent.putExtra("EXTRA_NOTE_PRIORITY", priority);
+        saveNoteIntent.putExtra(Constants.EXTRA_NOTE_TITLE, title);
+        saveNoteIntent.putExtra(Constants.EXTRA_NOTE_DESCRIPTION, description);
+        saveNoteIntent.putExtra(Constants.EXTRA_NOTE_PRIORITY, priority);
 
         setResult(RESULT_OK, saveNoteIntent);
         finish();

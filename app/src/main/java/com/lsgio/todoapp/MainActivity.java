@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -63,9 +64,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQUEST_CODE_ADD_NEW_NOTE && resultCode == RESULT_OK) {
-            Note note = new Note(data.getStringExtra("EXTRA_NOTE_TITLE"), data.getStringExtra("EXTRA_NOTE_DESCRIPTION"), data.getIntExtra("EXTRA_NOTE_PRIORITY", 1));
-            mNoteViewModel.insert(note);
+        if(requestCode == REQUEST_CODE_ADD_NEW_NOTE) {
+            if(resultCode == RESULT_OK) {
+                final String title = data.getStringExtra(Constants.EXTRA_NOTE_TITLE);
+                final String description = data.getStringExtra(Constants.EXTRA_NOTE_DESCRIPTION);
+                final int priority = data.getIntExtra(Constants.EXTRA_NOTE_PRIORITY,1);
+                Note note = new Note(title, description, priority);
+                mNoteViewModel.insert(note);
+                Toast.makeText(this, getString(R.string.prompt_note_saved), Toast.LENGTH_SHORT).show();
+            } else if (resultCode == RESULT_CANCELED) {
+                Toast.makeText(this, getString(R.string.prompt_note_not_saved), Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }
