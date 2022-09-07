@@ -49,5 +49,4 @@ public abstract class NoteDatabase extends RoomDatabase {
             return null;
         }
     }
-
 }
