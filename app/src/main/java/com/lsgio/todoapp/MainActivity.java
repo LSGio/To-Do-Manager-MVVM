@@ -7,18 +7,14 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
@@ -73,7 +69,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void handleNoteAddResult(ActivityResult result) {
 
+        final int resultCode = result.getResultCode();
+        final Intent data = result.getData();
+
+        if(resultCode == RESULT_OK) {
+            final String title = data.getStringExtra(Constants.EXTRA_NOTE_TITLE);
+            final String description = data.getStringExtra(Constants.EXTRA_NOTE_DESCRIPTION);
+            final int priority = data.getIntExtra(Constants.EXTRA_NOTE_PRIORITY,1);
+            Note note = new Note(title, description, priority);
+            mNoteViewModel.insert(note);
+            Toast.makeText(this, getString(R.string.prompt_note_saved), Toast.LENGTH_SHORT).show();
+        } else if (resultCode == RESULT_CANCELED) {
+            Toast.makeText(this, getString(R.string.prompt_note_not_saved), Toast.LENGTH_SHORT).show();
+        }
+
     }
+
+// onActivityResult was replaced with handleNoteAddResult
 
 //    @Override
 //    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -91,4 +103,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //            }
 //        }
 //    }
+
+
 }

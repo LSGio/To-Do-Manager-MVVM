@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.slider.Slider;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -19,6 +20,7 @@ public class AddNewNoteActivity extends AppCompatActivity {
     private TextInputEditText mTitleInputEditText;
     private TextInputEditText mDescriptionInputEditText;
     private Slider mPrioritySlider;
+    private MaterialToolbar mToolbar;
     private ActionBar mActionBar;
 
     @Override
@@ -26,13 +28,14 @@ public class AddNewNoteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_note);
 
-        mActionBar = getSupportActionBar();
+        mToolbar = findViewById(R.id.top_app_bar);
+        setSupportActionBar(mToolbar);
+
         mTitleInputEditText = findViewById(R.id.edittext_note_title);
         mDescriptionInputEditText = findViewById(R.id.edittext_note_description);
         mPrioritySlider = findViewById(R.id.slider_priority);
-
+        mActionBar = getSupportActionBar();
         if(mActionBar != null) {
-            mActionBar.setHomeAsUpIndicator(R.drawable.ic_close);
             mActionBar.setDisplayHomeAsUpEnabled(true);
         }
 
