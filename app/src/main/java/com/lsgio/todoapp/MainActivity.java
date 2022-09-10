@@ -21,8 +21,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    public static final int REQUEST_CODE_ADD_NEW_NOTE = 89461;
-
     private ActivityResultLauncher<Intent> mActivityResultLauncher;
 
     private NoteViewModel mNoteViewModel;
@@ -46,11 +44,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 result -> handleNoteAddResult(result));
 
         mRecyclerView.setAdapter(mNoteAdapter);
+        mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mNoteViewModel.getAllNotes().observe(this, new Observer<List<Note>>() {
             @Override
             public void onChanged(List<Note> notes) {
-                mNoteAdapter.setmNotes(notes);
+                mNoteAdapter.setNotes(notes);
             }
         });
 
@@ -76,33 +75,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             final String title = data.getStringExtra(Constants.EXTRA_NOTE_TITLE);
             final String description = data.getStringExtra(Constants.EXTRA_NOTE_DESCRIPTION);
             final int priority = data.getIntExtra(Constants.EXTRA_NOTE_PRIORITY,1);
-            Note note = new Note(title, description, priority);
+            final String creationDate = data.getStringExtra(Constants.EXTRA_NOTE_CREATION_DATE);
+            Note note = new Note(title, description, priority, creationDate);
             mNoteViewModel.insert(note);
             Toast.makeText(this, getString(R.string.prompt_note_saved), Toast.LENGTH_SHORT).show();
         } else if (resultCode == RESULT_CANCELED) {
             Toast.makeText(this, getString(R.string.prompt_note_not_saved), Toast.LENGTH_SHORT).show();
         }
-
     }
-
-// onActivityResult was replaced with handleNoteAddResult
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if(requestCode == REQUEST_CODE_ADD_NEW_NOTE) {
-//            if(resultCode == RESULT_OK) {
-//                final String title = data.getStringExtra(Constants.EXTRA_NOTE_TITLE);
-//                final String description = data.getStringExtra(Constants.EXTRA_NOTE_DESCRIPTION);
-//                final int priority = data.getIntExtra(Constants.EXTRA_NOTE_PRIORITY,1);
-//                Note note = new Note(title, description, priority);
-//                mNoteViewModel.insert(note);
-//                Toast.makeText(this, getString(R.string.prompt_note_saved), Toast.LENGTH_SHORT).show();
-//            } else if (resultCode == RESULT_CANCELED) {
-//                Toast.makeText(this, getString(R.string.prompt_note_not_saved), Toast.LENGTH_SHORT).show();
-//            }
-//        }
-//    }
-
-
 }

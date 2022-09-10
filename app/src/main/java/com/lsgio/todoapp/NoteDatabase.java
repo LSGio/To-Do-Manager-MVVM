@@ -9,6 +9,9 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import java.text.DateFormat;
+import java.util.Date;
+
 @Database(entities = {Note.class}, version = 1)
 public abstract class NoteDatabase extends RoomDatabase {
 
@@ -45,7 +48,10 @@ public abstract class NoteDatabase extends RoomDatabase {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            mNoteDao.insert(new Note("Sample", "This is a sample note and can be deleted", 1));
+            mNoteDao.insert(new Note("Sample",
+                    "This is a sample note and can be deleted",
+                    1,
+                    DateFormat.getDateInstance().format(new Date())));
             return null;
         }
     }

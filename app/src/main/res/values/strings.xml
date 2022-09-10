@@ -14,6 +14,7 @@
     <!--  Informational text  -->
     <string name="prompt_note_saved">Note saved</string>
     <string name="prompt_note_not_saved">Note not saved</string>
+    <string name="prompt_empty_title_or_description">Cannot have empty title or description</string>
 
     <!--  Accessibility  -->
     <string name="add_note_button">Add note button</string>

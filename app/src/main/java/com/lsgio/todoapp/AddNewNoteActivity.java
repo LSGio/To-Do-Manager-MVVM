@@ -15,6 +15,9 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.slider.Slider;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.text.DateFormat;
+import java.util.Date;
+
 public class AddNewNoteActivity extends AppCompatActivity {
 
     private TextInputEditText mTitleInputEditText;
@@ -64,9 +67,10 @@ public class AddNewNoteActivity extends AppCompatActivity {
         String title = mTitleInputEditText.getText().toString();
         String description = mDescriptionInputEditText.getText().toString();
         int priority = (int) mPrioritySlider.getValue();
+        String creationDate = DateFormat.getDateInstance().format(new Date());
 
         if(title.trim().isEmpty() || description.trim().isEmpty()) {
-            Toast.makeText(this, "Cannot have empty title or description", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.prompt_empty_title_or_description), Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -74,6 +78,7 @@ public class AddNewNoteActivity extends AppCompatActivity {
         saveNoteIntent.putExtra(Constants.EXTRA_NOTE_TITLE, title);
         saveNoteIntent.putExtra(Constants.EXTRA_NOTE_DESCRIPTION, description);
         saveNoteIntent.putExtra(Constants.EXTRA_NOTE_PRIORITY, priority);
+        saveNoteIntent.putExtra(Constants.EXTRA_NOTE_CREATION_DATE, creationDate);
 
         setResult(RESULT_OK, saveNoteIntent);
         finish();

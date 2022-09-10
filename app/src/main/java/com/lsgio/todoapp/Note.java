@@ -20,10 +20,14 @@ public class Note {
     @ColumnInfo(name = "priority")
     private int mPriority;
 
-    public Note(String title, String description, int priority) {
+    @ColumnInfo(name = "creation_date")
+    private String mCreationDate;
+
+    public Note(String title, String description, int priority, String creationDate) {
         this.mTitle = title;
         this.mDescription = description;
         this.mPriority = priority;
+        this.mCreationDate = creationDate;
     }
 
     public int getId() {
@@ -45,4 +49,9 @@ public class Note {
     public int getPriority() {
         return mPriority;
     }
+
+    public String getCreationDate() {
+        return mCreationDate;
+    }
+
 }

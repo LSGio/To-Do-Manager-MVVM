@@ -37,6 +37,13 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:layout_alignParentEnd="true" />
 
+        <TextView
+            android:id="@+id/textview_creation_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textview_description" />
+
+
     </RelativeLayout>
 
 </com.google.android.material.card.MaterialCardView>
